@@ -15,34 +15,34 @@ import javax.persistence.*;
 public class Rate {
     @Id
     @Column(name = "rid")
-    private String rid;
+    protected String rid;
     @Column(name = "c_cid")
-    private String cCid;
+    protected String cCid;
     @Column(name = "user_id")
-    private String userId;
+    protected String userId;
     @Column(name = "one_statement")
-    private String oneStatement;
+    protected String oneStatement;
     @Column(name = "lecturers_eval")
-    private Double lecturersEval;
+    protected Double lecturersEval;
     @Column(name = "curriculum_eval")
-    private Double curriculumEval;
+    protected Double curriculumEval;
     @Column(name = "employment_eval")
-    private Double employmentEval;
+    protected Double employmentEval;
     @Column(name = "culture_eval")
-    private Double cultureEval;
+    protected Double cultureEval;
     @Column(name = "facility_eval")
-    private Double facilityEval;
+    protected Double facilityEval;
     @Column(name = "advantage")
-    private String advantage;
+    protected String advantage;
     @Column(name = "disadvantage")
-    private String disadvantage;
+    protected String disadvantage;
     @Column(name = "date")
-    private String date;
+    protected String date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "c_cid", referencedColumnName = "cid", insertable = false, updatable = false)
-    private Course course;
+    protected Course course;
 
-    public Rate() {
+    protected Rate() {
     }
 }

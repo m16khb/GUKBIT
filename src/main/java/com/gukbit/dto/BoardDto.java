@@ -8,19 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class BoardDto {
-  private Integer bid;
-  private String author;
-  private String date;
-  private Integer view;
-  private String title;
-  private String content;
-  private String bAcademyCode;
-  private String bAcademyName;
-  private String bCourseName;
-  private String bCourseCode;
-  private Boolean visible;
-  private Integer recommend;
+public class BoardDto extends Board{
 
 
   // Dto에서 필요한 부분을 빌더패턴을 통해 entity로 만드는 역할

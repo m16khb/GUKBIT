@@ -94,7 +94,7 @@ public class RateService {
         Rate rateByRid = rateRepository.findByRid(rid);
         RateDto rateDtoByRid;
 
-        rateDtoByRid = RateDto.builder()
+        rateDtoByRid = (RateDto) Rate.builder()
                 .rid(rateByRid.getRid())
                 .cCid(rateByRid.getCCid())
                 .userId(rateByRid.getUserId())

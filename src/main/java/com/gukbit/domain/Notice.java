@@ -22,21 +22,21 @@ public class Notice {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bid;
+    protected Integer bid;
 
     @Column(columnDefinition = "varchar(45) not null comment '등록자'")
-    private String author;
+    protected String author;
 
     @Column
-    private String date;
+    protected String date;
 
     @Column
-    private Integer view;
+    protected Integer view;
 
     @Column(columnDefinition = "TEXT not null comment '타이틀'")
-    private String title;
+    protected String title;
 
     @Column(columnDefinition = "TEXT not null comment '내용'")
-    private String content;
+    protected String content;
 
 }

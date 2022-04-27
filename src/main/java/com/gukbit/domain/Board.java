@@ -15,41 +15,41 @@ public class Board {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bid;
+    protected Integer bid;
 
     @Column(columnDefinition = "varchar(45) not null comment '등록자'")
-    private String author;
+    protected String author;
 
     @Column
-    private String date;
+    protected String date;
 
     @Column(columnDefinition = "integer default 0", nullable = false, insertable=false)
-    private Integer view;
+    protected Integer view;
 
     @Column(columnDefinition = "TEXT not null comment '타이틀'", nullable = false)
-    private String title;
+    protected String title;
 
     @Column(columnDefinition = "TEXT not null comment '내용'")
-    private String content;
+    protected String content;
 
     @Column(name = "bAcademyName")
-    private String bAcademyName;
+    protected String bAcademyName;
 
     @Column
-    private String bCourseCode;
+    protected String bCourseCode;
 
 
     @Column(name = "b_course_name")
-    private String bCourseName;
+    protected String bCourseName;
 
     @Column (insertable=false)
-    private Boolean visible;
+    protected Boolean visible;
 
     @Column
-    private Integer recommend;
+    protected Integer recommend;
 
     @Column(name = "b_academy_code")
-    private String bAcademyCode;
+    protected String bAcademyCode;
 
 
     @Builder

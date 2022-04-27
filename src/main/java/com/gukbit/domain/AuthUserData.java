@@ -16,22 +16,22 @@ public class AuthUserData {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer aid;
+    protected Integer aid;
 
     @Column(name = "user_id")
-    private String userId;
+    protected String userId;
 
     @Column(name = "academy_code")
-    private String academyCode;
+    protected String academyCode;
 
     @Column(name = "course_id")
-    private String courseId;
+    protected String courseId;
 
     @Column(name = "course_name")
-    private String courseName;
+    protected String courseName;
 
     @Column(name = "session")
-    private Integer session;
+    protected Integer session;
 
     public AuthUserData(String userId, String academyCode, String courseId, String courseName, Integer session) {
         this.userId = userId;
