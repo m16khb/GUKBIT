@@ -96,7 +96,7 @@ public class WordAnalysisService implements IWordAnalysisService {
         List<String> aList = new ArrayList<>();
         List<String> dList = new ArrayList<>();
 
-        List<Course> list = courseService.getCourseListByAcademyId(academyId);
+        List<Course> list = courseService.getCourseList(academyId);
 
         List<String> listId = new ArrayList<>();
         for (Course course : list) {

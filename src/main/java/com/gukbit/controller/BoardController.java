@@ -64,7 +64,7 @@ public class BoardController {
     @GetMapping("/sortByView")
     public String alignByView(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
                               Pageable pageable, Model model,Today today) {
-        Page<Board> p = boardService.alignByView(pageable);
+        Page<Board> p = boardService.findBoardSampleBest(pageable);
         model.addAttribute("boardList", p);
         model.addAttribute("Today",today);
         try {

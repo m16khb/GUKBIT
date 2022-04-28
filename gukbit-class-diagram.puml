@@ -1,0 +1,475 @@
+@startuml
+class com.gukbit.domain.User {
+- Long userIdx
+- String userId
+- String password
+- String email
+- String tel
+- String nickname
+- Integer auth
+- Integer rights
+- byte[] image
+}
+interface com.gukbit.repository.BoardRepository {
+~ Page<Board> findBybAcademyCode(String,Pageable)
+~ int updateView(int)
+}
+interface com.gukbit.repository.ReplyRepository {
+~ List<Reply> findAllByBid(Integer)
+}
+class com.gukbit.controller.RateController {
+- RateService rateService
+- AcademyService academyService
+- UserService userService
++ String reviewInputMapping(User,String,Model)
++ String reviewInput(String,User,RateDto,Model)
++ String reviewInputChangeMapping(User,String,Model)
++ String reviewInputRewriteMapping(User,RateDto,Model,String)
++ String reviewDeleteMapping(String,String)
+}
+interface com.gukbit.repository.NoticeRepository {
+~ int updateView(int)
+}
+class com.gukbit.service.UserService {
+- UserRepository userRepository
+- AuthUserDataRepository authUserDataRepository
+- RateRepository rateRepository
+- CourseRepository courseRepository
++ void joinUser(User)
++ int idCheck(String)
++ void updateCheck(UpdateUserData,BindingResult,HttpServletRequest)
++ void updateUser(User)
++ void deleteUser(User)
++ void makeUpdateUser(UpdateUserData)
++ AuthUserData getAuthUserData(String)
++ void updateSession(HttpServletRequest,User)
+}
+class com.gukbit.controller.UserController {
+- UserService userService
++ String processRegistration(User)
++ int idCheck(String)
++ String myPageAuthGet(Model)
++ String joinMyPage(User,Model,PwCheck,BindingResult)
++ String updateMyPage(UpdateUserData,BindingResult,HttpServletRequest)
++ String deleteMyPage(User,HttpServletRequest)
+}
+class com.gukbit.controller.UserController.PwCheck {
+~ String password
+}
+class com.gukbit.service.BoardService {
+- BoardRepository boardRepository
+- AuthUserDataRepository authUserDataRepository
++ Page<Board> findBoardList(Pageable)
++ Page<Board> findBoardSampleNew(Pageable)
++ Page<Board> findBoardSampleBest(Pageable)
++ Page<Board> alignByView(Pageable)
++ Boolean findAuthByUserId(String)
++ Page<Board> findAcademyBoardList(String,Pageable)
++ void boardCreate(BoardDto)
++ Board findBoardByIdx(Integer)
++ void deleteBoard(Integer)
++ void updateBoard(BoardDto)
++ boolean writeUserCheck(User,Integer)
++ int updateView(int)
+}
+class com.gukbit.dto.AcademyDto {
+- String code
+- String name
+- String homeUrl
+- String region
+- String addr
+- Double eval
+- String tel
+- String imageUrl
+}
+class com.gukbit.domain.Academy {
+- String code
+- String name
+- String homeUrl
+- String region
+- String addr
+- Double eval
+- String tel
+- String imageUrl
+}
+class com.gukbit.api.ApiCommon {
+~ {static} String authKey
+- {static} String[] DateBuilder()
++ {static} String getStartDate()
++ {static} String getEndDate()
+~ {static} String getTagValue(String,Element)
+~ {static} int getTotalPage(String)
+}
+class com.gukbit.domain.Notice {
+- Integer bid
+- String author
+- String date
+- Integer view
+- String title
+- String content
+}
+interface com.gukbit.repository.UserRepository {
+~ User findByUserId(String)
+}
+class com.gukbit.etc.Today {
+- String today
+}
+class com.gukbit.domain.Rate {
+- String rid
+- String cCid
+- String userId
+- String oneStatement
+- Double lecturersEval
+- Double curriculumEval
+- Double employmentEval
+- Double cultureEval
+- Double facilityEval
+- String advantage
+- String disadvantage
+- String date
+- Course course
+}
+class com.gukbit.dto.ReplyDto {
+- Reply reply
+- List<Reply> rReplyList
+}
+class com.gukbit.api.AcademyList {
++ {static} Map<String,AcademyData> academylist()
++ {static} void detailList(Map<String,AcademyData>)
+}
+class com.gukbit.dto.BoardDto {
+- Integer bid
+- String author
+- String date
+- Integer view
+- String title
+- String content
+- String bAcademyCode
+- String bAcademyName
+- String bCourseName
+- String bCourseCode
+- Boolean visible
+- Integer recommend
++ Board toEntity()
+}
+class com.gukbit.service.LoginService {
+- UserRepository userRepository
++ User login(LoginData,BindingResult)
+}
+class com.gukbit.service.RateService {
+- AcademyRepository academyRepository
+- RateRepository rateRepository
+- CourseRepository courseRepository
+- AuthUserDataRepository authUserDataRepository
++ void saveReview(RateDto)
++ void saveReviewEval(RateDto,String,int)
++ List<Course> getCoursesByAcademyCode(String)
++ Course getCourseByCourseidAndSession(String,int)
++ AuthUserData getAuthUserData(String)
++ RateDto findByRid(String)
++ void deleteRate(String)
++ Boolean findRateByUserId(String)
++ List<Rate> findAllRateByCourseIdIn(List<String>)
+}
+class com.gukbit.DummyData {
++ {static} void main(String[])
+}
+class com.gukbit.service.NoticeService {
+- NoticeRepository noticeRepository
++ Page<Notice> findNoticeList(Pageable)
++ void noticeCreate(NoticeDto)
++ Notice findNoticeByIdx(Integer)
++ void deleteNotice(Integer)
++ void updateNotice(NoticeDto)
++ boolean writeUserCheck(User,Integer)
++ Page<Notice> alignByView(Pageable)
++ int updateView(int)
+}
+class com.gukbit.domain.Board {
+- Integer bid
+- String author
+- String date
+- Integer view
+- String title
+- String content
+- String bAcademyName
+- String bCourseCode
+- String bCourseName
+- Boolean visible
+- Integer recommend
+- String bAcademyCode
+}
+class com.gukbit.controller.LoginController {
+- LoginService loginService
+- {static} String prevPage
++ String loginMapping(Model,HttpServletRequest)
++ String login(LoginData,BindingResult,HttpServletRequest)
++ String logout(HttpServletRequest)
+}
+interface com.gukbit.repository.AcademyRepository {
+~ Academy findByCode(String)
+~ List<Academy> findByNameContaining(String)
+~ int setEval(String,double)
+}
+class com.gukbit.etc.LoginData {
+- String id
+- String pw
+}
+class com.gukbit.controller.BoardController {
+- BoardService boardService
+- ReplyService replyService
+- AcademyService academyService
+- CourseService courseService
+- RateService rateService
+- UserService userService
++ String communityAllBoardMapping(User,Pageable,Today,Model)
++ String alignByView(User,Pageable,Model,Today)
++ String communityWriteMapping(User,Model)
++ String communityDeleteMapping(Integer)
++ String communityReWriteMapping(Integer,Model)
++ String communityPostReWriteMapping(BoardDto,BindingResult)
++ BoardDto boardCreate(BoardDto)
++ String board(Integer,User,Model,HttpServletRequest,HttpServletResponse)
++ String reply(User,Map<String,String>)
++ String myCom(User)
+}
+class com.gukbit.etc.UpdateUserData {
+- User user
+- String changePassword
+- String changePasswordCheck
+- String academyCode
+- String courseId
+- AuthUserData authUserData
+- Rate rate
++ AuthUserData getAuthUserData()
++ Rate getRate()
+}
+class com.gukbit.controller.NoticeController {
+- NoticeService noticeService
+- NoticeRepository noticeRepository
++ NoticeDto boardCreate(NoticeDto)
++ String noticeAllBoardMapping(Pageable,Model,Today)
++ String alignByView(Pageable,Model,Today)
++ String noticeWriteMapping()
++ String noticeDeleteMapping(Integer)
++ String noticeReWriteMapping(Integer,Model)
++ String noticePostReWriteMapping(NoticeDto)
++ String notice(Integer,User,Model,HttpServletRequest,HttpServletResponse)
+}
+class com.gukbit.dto.NoticeDto {
+- Integer bid
+- String author
+- String date
+- Integer view
+- String title
+- String content
++ Notice toEntity()
+}
+interface com.gukbit.repository.DivisionSRepository {
+}
+interface com.gukbit.repository.CourseRepository {
+~ List<Course> findAllByFieldSStartingWith(String)
+~ List<Course> findAllByFieldSIn(String[])
+~ List<Course> findAllByAcademyCode(String)
+~ List<Course> findByAcademyCode(String)
+~ Course findByIdAndSession(String,int)
+~ List<Course> findAllById(String)
+}
+class com.gukbit.service.IndexService {
+~ DivisionSRepository DivisionSRepository
+~ CourseRepository courseRepository
+~ AcademyRepository academyRepository
++ List<DivisionS> selectSlideMenu()
++ List<Course> getCodeAcademy(String,String)
+}
+interface com.gukbit.service.IWordAnalysisService {
+~ List<String> doWordNouns(String)
+~ Map<String,Integer> doWordCount(List<String>)
+~ List<Map<String,Integer>> doWordAnalysis(String)
+}
+class com.gukbit.service.CourseService {
+- CourseRepository courseRepository
++ List<Course> getCourseData(String)
++ List<Course> getCourseList(String)
++ List<Course> getCourseListByAcademyId(String)
+}
+class com.gukbit.api.AcademyData {
+- String academyName
+- String academyId
+- String trainingId
+- String region
+- String addr
+- String tel
+- String hpAddr
+- String dummysession
+}
+interface com.gukbit.session.SessionConst {
++ {static} String LOGIN_USER
+}
+class com.gukbit.service.WordAnalysisService {
+- RateService rateService
+- CourseService courseService
+- Komoran nlp
++ List<String> doWordNouns(String)
++ Map<String,Integer> doWordCount(List<String>)
++ List<Map<String,Integer>> doWordAnalysis(String)
+}
+class com.gukbit.api.CourseList {
++ {static} Map<Integer,CourseData> courselist()
+}
+class com.gukbit.api.CourseData {
+- String academyId
+- String courseId
+- String dFieldS
+- String session
+- String start
+- String end
+- String title
+- String fieldM
+- String fieldS
+}
+class com.gukbit.domain.AuthUserData {
+- Integer aid
+- String userId
+- String academyCode
+- String courseId
+- String courseName
+- Integer session
+}
+class com.gukbit.etc.PopularSearchTerms {
+- Map<String,Integer> popularSearchTerms
++ void insert(String)
++ int size()
++ List<String> getTopFive()
++ void print()
++ List<JSONObject> getJson()
++ void init()
+}
+class com.gukbit.domain.Reply {
+- Integer rid
+- Integer rBid
+- Integer rRid
+- String rAuthor
+- String rContent
+- String rDate
+- Board board
+}
+interface com.gukbit.repository.IndexRepository {
+}
+class com.gukbit.GukbitApplication {
++ {static} void main(String[])
+}
+class com.gukbit.service.ReplyService {
+- ReplyRepository replyRepository
++ void saveReply(Map<String,String>,User)
++ List<ReplyDto> getReplyList(int)
++ void rReplyDiv(List<ReplyDto>,Reply)
++ int countAllReply(Integer)
+}
+class com.gukbit.dto.RateDto {
+- String rid
+- String cCid
+- String userId
+- String oneStatement
+- Double lecturersEval
+- Double curriculumEval
+- Double employmentEval
+- Double cultureEval
+- Double facilityEval
+- String advantage
+- String disadvantage
+- String date
++ Rate toEntity()
+}
+class com.gukbit.domain.DivisionS {
+- String dFieldS
+- String div
+}
+class com.gukbit.controller.IndexController {
+- BoardService boardService
+- IndexService indexservice
++ List<Course> indexSlideData(String,String)
++ String indexMapping(User,Pageable,Model)
++ String signUpMapping(Model)
+~ String reviewInputMapping()
+~ String findidMapping()
+~ String findPwMapping()
+~ String indpwAuthMapping()
+~ String myPageMapping()
+~ String myPageAuthMapping()
+~ String notice()
+~ String wordCloud()
+}
+class com.gukbit.controller.CourseController {
+- CourseService courseService
++ String getCourseDataMapping(String,Model)
+}
+class com.gukbit.controller.AcademyController {
+- PopularSearchTerms popularSearchTerms
+- AcademyService academyService
+- RateService rateService
+- CourseService courseService
+- BoardService boardService
++ String academyBoard(String,Pageable,Today,Model)
+~ String academyMapping(String,User,Pageable,Pageable,Model,HttpServletRequest)
++ Academy academyMapMapping(String,Model)
++ String searchAcademy(String,Model,HttpServletRequest,HttpServletResponse)
++ List<JSONObject> wordCloud()
++ List<JSONObject> getJsonList(Map<String,Integer>,String)
+}
+class com.gukbit.service.AcademyService {
+- AcademyRepository academyRepository
+- CourseRepository courseRepository
+- RateRepository rateRepository
+- IWordAnalysisService wordAnalysisService
++ List<Academy> searchAllAcademy()
++ List<AcademyDto> searchAcademy(String)
+- AcademyDto convertEntityToDto(Academy)
++ Academy getAcademyInfo(String)
++ double[] reviewCourseAverage(List<Course>)
++ Page<Rate> reviewCoursePageList(List<Course>,Pageable)
++ Page<Course> expectedCoursePageList(String,Pageable)
++ Academy isImage(Academy)
++ List<Map<String,Integer>> analysis(String)
+}
+interface com.gukbit.repository.RateRepository {
+~ Rate findByUserId(String)
+~ void deleteByUserId(String)
+~ Rate findByRid(String)
+~ List<Rate> findAllBycCidIn(List<String>)
+~ List<Rate> findAllFetch()
+}
+interface com.gukbit.repository.AuthUserDataRepository {
+~ AuthUserData findByUserId(String)
+}
+class com.gukbit.controller.ModalController {
+- AcademyService academyService
++ List<AcademyDto> modalReturn(String)
+}
+class com.gukbit.domain.Course {
+- String cid
+- String academyCode
+- String id
+- Integer session
+- String fieldM
+- String fieldS
+- String start
+- String end
+- String dFieldS
+- String name
+- Academy academy
+}
+
+
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.BoardRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.ReplyRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.NoticeRepository
+com.gukbit.controller.UserController +.. com.gukbit.controller.UserController.PwCheck
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.UserRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.AcademyRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.DivisionSRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.CourseRepository
+com.gukbit.service.IWordAnalysisService <|.. com.gukbit.service.WordAnalysisService
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.RateRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.gukbit.repository.AuthUserDataRepository
+@enduml

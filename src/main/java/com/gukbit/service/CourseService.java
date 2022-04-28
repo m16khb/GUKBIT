@@ -26,8 +26,8 @@ public class CourseService {
     public List<Course> getCourseList(String code) { return courseRepository.findAllByAcademyCode(code); }
 
 
-    public List<Course> getCourseListByAcademyId(String academyId){
-        return courseRepository.findAllByAcademyCode(academyId);
-    }
+//    public List<Course> getCourseListByAcademyId(String academyId){
+//        return courseRepository.findAllByAcademyCode(academyId);
+//    }
 
 }

@@ -1,5 +1,6 @@
 package com.gukbit.api;
 
+import com.gukbit.domain.Reply;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
