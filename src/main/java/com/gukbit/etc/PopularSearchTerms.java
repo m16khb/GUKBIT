@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PopularSearchTerms {
     private Map<String, Integer> popularSearchTerms = new ConcurrentHashMap<>(); //여러 클라이언트에서 검색을 대비하여 Thread Safe한 Map 사용
 
+    //맵에 key가 존재하는지 확인 후 value 값 결정
     public void insert(String term) {
         int count = popularSearchTerms.containsKey(term) ? popularSearchTerms.get(term) : 0;
         popularSearchTerms.put(term, count + 1);
@@ -21,6 +22,7 @@ public class PopularSearchTerms {
         return popularSearchTerms.size();
     }
 
+    //상위 5위 인기검색어 추출
     public List<String> getTopFive() {
         List<String> list = new ArrayList<>();
 
@@ -42,12 +44,7 @@ public class PopularSearchTerms {
         return list;
     }
 
-    public void print() {
-        for (String s : popularSearchTerms.keySet()) {
-            System.out.println(s + "/" + popularSearchTerms.get(s));
-        }
-    }
-    
+    //프런트에서 처리하기 쉽도록 Json List형태로 반환
     public List<JSONObject> getJson(){
         List<JSONObject> list = new ArrayList<>();
 

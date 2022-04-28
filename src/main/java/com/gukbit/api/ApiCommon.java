@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 public class ApiCommon {
     static final String authKey = "o9fUZHPTkA3NoKfhmspVZUBNZt802MwO";
 
+
     private static String[] DateBuilder(){
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMM");
