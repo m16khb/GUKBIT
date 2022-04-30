@@ -91,10 +91,12 @@ public class WordAnalysisService implements IWordAnalysisService {
 
     @Override
     public List<Map<String,Integer>> doWordAnalysis(String academyId) throws Exception {
+        //장점Map
         Map<String, Integer> aMap = new HashMap<>();
+        //단점Map
         Map<String, Integer> dMap = new HashMap<>();
-        List<String> aList = new ArrayList<>();
-        List<String> dList = new ArrayList<>();
+        List<String> aList = new ArrayList<>(); //장점
+        List<String> dList = new ArrayList<>(); //단점
 
         List<Course> list = courseService.getCourseListByAcademyId(academyId);
 
@@ -103,10 +105,10 @@ public class WordAnalysisService implements IWordAnalysisService {
             listId.add(course.getCid());
         }
 
-
+        //리뷰 가져오기
         List<Rate> rateList = rateService.findAllRateByCourseIdIn(listId);
-        List<String> advantageList = new ArrayList<>();
-        List<String> disadvantageList = new ArrayList<>();
+        List<String> advantageList = new ArrayList<>(); //장점 리스트
+        List<String> disadvantageList = new ArrayList<>(); //단점 리스트
 
         for (Rate rate : rateList) {
             advantageList.add(rate.getAdvantage());
